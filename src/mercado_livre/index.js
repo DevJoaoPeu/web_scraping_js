@@ -1,10 +1,9 @@
-const pup = require("puppeteer");
+import puppeteer from "puppeteer";
 
 const url = "https://www.mercadolivre.com.br/";
-const search = "pc gamer montado com rx6600";
 
-const execute = async () => {
-  const browser = await pup.launch({ headless: false });
+export const MercadoLivre = async (search) => {
+  const browser = await puppeteer.launch({ headless: false });
   const page = await browser.newPage();
 
   await page.goto(url);
@@ -65,5 +64,3 @@ async function browsePages(links, page) {
     console.log(obj);
   }
 }
-
-execute();
