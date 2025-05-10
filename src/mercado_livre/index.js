@@ -2,7 +2,7 @@ import puppeteer from "puppeteer";
 
 const url = "https://www.mercadolivre.com.br/";
 
-export const MercadoLivre = async (search) => {
+export const MercadoLivre = async (paramSeach, quantityOfItems) => {
   const browser = await puppeteer.launch({ headless: false });
   const page = await browser.newPage();
 
@@ -10,12 +10,12 @@ export const MercadoLivre = async (search) => {
 
   await page.waitForSelector("#cb1-edit");
 
-  await page.type("#cb1-edit", search);
+  await page.type("#cb1-edit", paramSeach);
 
   await Promise.all([page.waitForNavigation(), page.click(".nav-search-btn")]);
 
   const links = await page.$$eval(".poly-component__title-wrapper > a", (el) =>
-    el.map((link) => link.href)
+    el.slice(0, +quantityOfItems).map((link) => link.href)
   );
 
   console.log("Encontrados:", links.length);

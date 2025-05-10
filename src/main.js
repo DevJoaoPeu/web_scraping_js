@@ -14,20 +14,26 @@ rl.question(
      3 - Pichau,
      4 - Kabum,
      5 - Sair ------> `,
-  (resposta) => {
-    if (resposta === "5") {
+  (typeSite) => {
+    if (typeSite === "5") {
       r1.close();
     } else {
-      outraPergunta(resposta);
+      paramSeach(typeSite);
     }
   }
 );
 
-function outraPergunta(resposta) {
-  rl.question("Qual seria a sua busca? --> ", (resposta2) => {
-    switch (resposta) {
+function paramSeach(typeSite) {
+  rl.question("Qual seria a sua busca? --> ", (paramSeach) => {
+    quantityOfItems(typeSite, paramSeach);
+  });
+}
+
+function quantityOfItems(typeSite, paramSeach) {
+  rl.question("Quantos itens deseja buscar? --> ", (quantityOfItems) => {
+    switch (typeSite) {
       case "1":
-        MercadoLivre(resposta2);
+        MercadoLivre(paramSeach, quantityOfItems);
         break;
     }
   });
