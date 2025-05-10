@@ -14,8 +14,10 @@ export const MercadoLivre = async (paramSeach, quantityOfItems) => {
 
   await Promise.all([page.waitForNavigation(), page.click(".nav-search-btn")]);
 
-  const links = await page.$$eval(".poly-component__title-wrapper > a", (el) =>
-    el.slice(0, +quantityOfItems).map((link) => link.href)
+  const links = await page.$$eval(
+    ".poly-component__title-wrapper > a",
+    (el, itens) => el.slice(0, itens).map((link) => link.href),
+    quantityOfItems
   );
 
   console.log("Encontrados:", links.length);
