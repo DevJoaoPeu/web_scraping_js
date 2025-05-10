@@ -22,12 +22,10 @@ export const MercadoLivre = async (paramSeach, quantityOfItems) => {
 
   console.log("Encontrados:", links.length);
 
-  await browsePages(links, page);
-
-  await browser.close();
+  await browsePages(links, page, browser);
 };
 
-async function browsePages(links, page) {
+async function browsePages(links, page, browser) {
   for (const link of links) {
     await page.goto(link);
     await page.waitForSelector(".ui-pdp-title");
@@ -49,7 +47,7 @@ async function browsePages(links, page) {
         return result;
       }
     );
-    const vendedor = await page.evaluate(() => {
+    const seller = await page.evaluate(() => {
       const el = document.querySelector(".ui-pdp-seller span:nth-of-type(2)");
       if (!el) return null;
       return el.innerText;
@@ -60,9 +58,11 @@ async function browsePages(links, page) {
       price,
       infosProduct,
       link,
-      vendedor: vendedor || "Não informado",
+      seller: seller || "Não informado",
     };
 
     console.log(obj);
   }
+
+  await browser.close();
 }
